@@ -23,7 +23,7 @@ def upload_file(fileForm: FileForm)-> FileModel:
 
         return file_dao.insert(fileForm.linkInfo, fileForm.linkKey, fileForm.realName, fileForm.fileUrl, fileForm.fileSize)
     
-    elif fileForm.base64String:
+    if fileForm.base64String:
         file_bytes = base64.b64decode(fileForm.base64String)
         if not file_bytes:
             return None
@@ -55,7 +55,7 @@ def upload_file(fileForm: FileForm)-> FileModel:
     
     return None
 
-def delete_file(fileId:int)-> bool:
+def delete_file(fileId: int)-> bool:
     return file_dao.delete(fileId)
 
 def add_file(fileForm: FileSchema)-> FileModel:

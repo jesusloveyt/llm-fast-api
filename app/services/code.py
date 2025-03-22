@@ -15,5 +15,5 @@ def add_code(codeForm: CodeSchema)-> CodeModel:
 def update_code(codeForm: CodeSchema)-> bool:
     return code_dao.update(codeForm.codeId, codeForm.codeLabel, codeForm.memo, codeForm.stringValue, codeForm.numberValue)
     
-def delete_code(codeId:int)-> bool:
+def delete_code(codeId: int)-> bool:
     return code_dao.delete_using_flag(codeId)

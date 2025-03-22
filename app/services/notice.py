@@ -15,6 +15,8 @@ def get_notice_list(useFlag:bool=True, schTxt:str=None, noticeKind:str=None, lis
 
 def get_notice_by_id(noticeId:int)-> NoticeModel:
     notice = notice_dao.get_by_id(noticeId)
+    if not notice:
+        return None
     notice_data = NoticeResult.model_validate(notice)
     notice_data.mainImage = file_dao.get_by_link("noticeMainImage", noticeId)
     return notice_data
@@ -25,5 +27,5 @@ def add_notice(noticeForm: NoticeSchema)-> NoticeModel:
 def update_notice(noticeForm: NoticeSchema)-> bool:
     return notice_dao.update(noticeForm.noticeId, noticeForm.noticeLabel, noticeForm.memo, noticeForm.stringValue, noticeForm.numberValue)
     
-def delete_notice(noticeId:int)-> bool:
+def delete_notice(noticeId: int)-> bool:
     return notice_dao.delete_using_flag(noticeId)

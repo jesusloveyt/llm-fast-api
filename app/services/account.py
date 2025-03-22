@@ -10,6 +10,8 @@ def get_account_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, list
 
 def get_account_by_id(accountId:int)-> AccountModel:
     account = account_dao.get_by_id(accountId)
+    if not account:
+        return None
     account_data = AccountResult.model_validate(account)
     account_data.profileImage = file_dao.get_by_link("accountProfileImage", accountId)
     return account_data
@@ -26,5 +28,5 @@ def update_account(accountForm: AccountForm)-> bool:
                               accountForm.postcode,  accountForm.address, accountForm.addressDetail, 
                               accountForm.role, accountForm.fcmToken, accountForm.refreshToken)
 
-def delete_account(accountId:int)-> bool:
+def delete_account(accountId: int)-> bool:
     return account_dao.delete_using_flag(accountId)
