@@ -65,6 +65,20 @@ def insert(linkInfo: str, linkKey: int, realName: str, fileUrl: str, fileSize:in
         session.refresh(new_file)
         return new_file
 
+def delete_using_flag(linkInfo: str=None, linkKey: int=0, fileId: int=0) -> bool:
+    with session_maker.begin() as session:
+        if linkInfo and linkKey > 0:
+            session.execute(Update(FileModel)
+                        .where(FileModel.linkInfo == linkInfo)
+                        .where(FileModel.linkKey == linkKey)
+                        .values({FileModel.deletedAt: current_timestamp()}))
+        elif fileId and fileId > 0:
+            session.execute(Update(FileModel)
+                        .where(FileModel.fileId == fileId)
+                        .values({FileModel.deletedAt: current_timestamp()}))
+        else:
+            return False
+        return True
 
 def delete(fileId: int) -> bool:
     with session_maker.begin() as session:

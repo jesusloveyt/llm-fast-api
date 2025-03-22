@@ -18,3 +18,4 @@ class FileModel(Base):
     fileUrl = Column("file_url", String(120))
     fileSize = Column("file_size", Integer())
     savedAt = Column("saved_at", DateTime(), default=current_timestamp())
+    deletedAt = Column("deleted_at", DateTime())
