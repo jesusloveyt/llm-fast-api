@@ -1,3 +1,4 @@
+import time
 from fastapi import APIRouter
 from fastapi import Query
 from fastapi import Path
@@ -5,6 +6,7 @@ from fastapi import Path
 from pydantic import Field
 from typing import Optional
 
+from common.util.aws_s3 import create_presigned_url
 from common.api_result import ApiResult, ResultStatus
 from models.file import FileModel
 from services import file as file_service
@@ -31,6 +33,34 @@ async def get_file_list(
         api_result.reason = "Exception"
         api_result.message = str(e)
     return api_result
+
+@router.get("/presigned", response_model=ApiResult[dict])
+async def get_presigned_url(
+    fileSavedName: Optional[str] = Query(None),
+    fileType: Optional[str] = Query(None)
+) -> ApiResult[dict]:
+    try:
+        if not fileSavedName:
+            fileSavedName = str(int(time.time() * 1000))
+        if not fileType:
+            fileType = "application/octet-stream"
+
+        fields = {
+            "Content-Type": fileType
+        }
+        conditions = [
+            {"Content-Type": fileType},
+            ["content-length-range", 1, 104857600],  # 1 Byte ~ 100 MB
+        ]
+        api_result = ApiResult[dict]()
+        api_result.data =  create_presigned_url(fileSavedName, fields, conditions)
+    except Exception as e:
+        print("get_file_list Exception", e)
+        api_result.status = ResultStatus.ERROR
+        api_result.reason = "Exception"
+        api_result.message = str(e)
+    return api_result
+
 
 @router.get("/{fileId}", response_model=ApiResult[FileResult])
 async def get_file_by_id(fileId: int = Path(..., ge=1)) -> ApiResult[FileModel]:
@@ -94,3 +124,4 @@ async def add_file(fileForm: FileSchema) -> ApiResult[FileModel]:
         api_result.reason = "Exception"
         api_result.message = str(e)
     return api_result
+

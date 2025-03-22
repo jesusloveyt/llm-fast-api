@@ -11,7 +11,7 @@ def get_account_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, list
 def get_account_by_id(accountId:int)-> AccountModel:
     account = account_dao.get_by_id(accountId)
     account_data = AccountResult.model_validate(account)
-    account_data.mainImage = file_dao.get_by_link("accountProfileImage", accountId)
+    account_data.profileImage = file_dao.get_by_link("accountProfileImage", accountId)
     return account_data
 
 def add_account(accountForm: AccountForm)-> AccountModel:

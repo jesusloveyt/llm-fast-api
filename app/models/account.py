@@ -18,7 +18,7 @@ class AccountModel(Base):
     accountKey = Column("account_key", String(30))
     password = Column("password", String(256))
     snsKey = Column("sns_key", String(60))
-    userName = Column("human_name", String(30))
+    userName = Column("user_name", String(30))
     phone = Column("phone", String(20))
     email = Column("email", String(100))
     # language String(12)
