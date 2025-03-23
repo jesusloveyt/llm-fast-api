@@ -19,7 +19,7 @@ async def get_code_list(
     useFlag: Optional[bool] = Query(True),
     schTxt: Optional[str] = Query(None),
     parentCode: Optional[str] = Query(None),
-    listCount: Optional[int] = Query(0, ge=0),
+    listCount: Optional[int] = Query(0, gt=0),
     skipCount: Optional[int] = Query(0, ge=0)
 ) -> ApiResult[list[CodeModel]]:
     try:
