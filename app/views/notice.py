@@ -5,7 +5,7 @@ from fastapi import Path
 from common.api_result import ApiResult, ResultStatus
 from models.notice import NoticeModel
 from services import notice as notice_service
-from dtos.notice import NoticeResult, NoticeSchema
+from dtos.notice import NoticeResult, NoticeForm
 from pydantic import Field
 from typing import Optional
 
@@ -49,7 +49,7 @@ async def get_notice_by_id(noticeId: int = Path(..., ge=1)) -> ApiResult[NoticeR
     return api_result
 
 @router.post("", response_model=ApiResult[NoticeResult])
-async def add_notice(noticeForm: NoticeSchema) -> ApiResult[NoticeModel]:
+async def add_notice(noticeForm: NoticeForm) -> ApiResult[NoticeModel]:
     try:
         api_result = ApiResult()
         notice_data = notice_service.add_notice(noticeForm)
@@ -65,7 +65,7 @@ async def add_notice(noticeForm: NoticeSchema) -> ApiResult[NoticeModel]:
     return api_result
 
 @router.put("", response_model=ApiResult)
-async def update_notice(noticeForm: NoticeSchema) -> ApiResult:
+async def update_notice(noticeForm: NoticeForm) -> ApiResult:
     try:
         api_result = ApiResult()
         result = notice_service.update_notice(noticeForm)
