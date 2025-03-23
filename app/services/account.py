@@ -4,9 +4,8 @@ from daos import file as file_dao
 from models.account import AccountModel
 from dtos.account import AccountResult, AccountForm
 
-def get_account_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, listCount:int=None, skipCount:int=None)-> list[AccountResult]:
-    account_list = account_dao.query_list(useFlag=useFlag, schTxt=schTxt, joinType=joinType, listCount=listCount, skipCount=skipCount)
-    return account_list
+def query_account_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, listCount:int=None, skipCount:int=None)-> list[AccountResult]:
+    return account_dao.query_list(useFlag=useFlag, schTxt=schTxt, joinType=joinType, listCount=listCount, skipCount=skipCount)
 
 def get_account_by_id(accountId:int)-> AccountModel:
     account = account_dao.get_by_id(accountId)

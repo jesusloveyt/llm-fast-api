@@ -22,7 +22,7 @@ async def get_account_list(
 ) -> ApiResult[list[AccountResult]]:
     try:
         api_result = ApiResult[list[AccountResult]]()
-        api_result.data = account_service.get_account_list(useFlag=useFlag, schTxt=schTxt, joinType=joinType, listCount=listCount, skipCount=skipCount)
+        api_result.data = account_service.query_account_list(useFlag=useFlag, schTxt=schTxt, joinType=joinType, listCount=listCount, skipCount=skipCount)
     except Exception as e:
         print("get_account_list Exception", e)
         api_result.status = ResultStatus.ERROR
