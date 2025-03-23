@@ -22,9 +22,5 @@ class FileResult(FileSchema):
             datetime: lambda v: v.strftime('%Y-%m-%d %H:%M:%S')
         }
 
-class FileForm(BaseModel):
-    fileId: Optional[int] = 0
-    linkInfo: Optional[str] = None
-    realName: str
-    fileUrl: Optional[str] = None
+class FileForm(FileSchema):
     base64String: Optional[str] = None

@@ -26,3 +26,7 @@ class NoticeResult(NoticeSchema, BaseResult):
 
 class NoticeParam(BaseParam):
     noticeKind: str = Query(None)
+
+
+class NoticeForm(NoticeSchema):
+    mainImage: Optional[FileSchema] = None
