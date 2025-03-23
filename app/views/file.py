@@ -21,7 +21,7 @@ router = APIRouter(
 async def get_file_list(
     schTxt: Optional[str] = Query(None),
     linkInfo: Optional[str] = Query(None),
-    listCount: Optional[int] = Query(0, gt=0),
+    listCount: Optional[int] = Query(0, ge=0),
     skipCount: Optional[int] = Query(0, ge=0)
 ) -> ApiResult[list[FileModel]]:
     try:

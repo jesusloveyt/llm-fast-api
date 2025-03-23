@@ -30,6 +30,11 @@ def get_by_id(codeId:int)-> CodeModel:
         code = session.query(CodeModel).filter(CodeModel.codeId == codeId).first()
         return code
 
+def get_by_code_keys(parentCode:str, code:str)-> CodeModel:
+    with session_maker() as session:
+        code = session.query(CodeModel).filter(CodeModel.parentCode == parentCode, CodeModel.code == code, CodeModel.useFlag == True).first()
+        return code
+
 def insert(code: str, parentCode: str, codeLabel: str, memo: str, stringValue: str, numberValue:float)-> CodeModel:
     with session_maker.begin() as session:
         new_code = CodeModel()
