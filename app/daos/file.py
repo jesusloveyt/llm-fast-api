@@ -28,6 +28,7 @@ def get_list(schTxt:str=None, linkInfo:str=None, listCount:int=None, skipCount:i
 def get_by_id(fileId:int)-> FileModel:
     with session_maker() as session:
         file = session.query(FileModel).filter(FileModel.fileId == fileId).first()
+        return file
 
 
 def get_list_by_link(linkInfo:str, linkKey:int)-> list[FileModel]:
