@@ -14,7 +14,7 @@ router = APIRouter(
     prefix="/api/code"
 )
 
-@router.get("/", response_model=ApiResult[list[CodeResult]])
+@router.get("", response_model=ApiResult[list[CodeResult]])
 async def get_code_list(
     useFlag: Optional[bool] = Query(True),
     schTxt: Optional[str] = Query(None),
@@ -49,7 +49,7 @@ async def get_code_by_id(codeId: int = Path(..., ge=1)) -> ApiResult[CodeModel]:
         api_result.message = str(e)
     return api_result
 
-@router.post("/", response_model=ApiResult[CodeResult])
+@router.post("", response_model=ApiResult[CodeResult])
 async def add_code(codeForm: CodeSchema) -> ApiResult[CodeModel]:
     try:
         api_result = ApiResult()
@@ -65,7 +65,7 @@ async def add_code(codeForm: CodeSchema) -> ApiResult[CodeModel]:
         api_result.message = str(e)
     return api_result
 
-@router.put("/", response_model=ApiResult)
+@router.put("", response_model=ApiResult)
 async def update_code(codeForm: CodeSchema) -> ApiResult:
     try:
         api_result = ApiResult()

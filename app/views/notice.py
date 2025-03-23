@@ -13,7 +13,7 @@ router = APIRouter(
     prefix="/api/notice"
 )
 
-@router.get("/", response_model=ApiResult[list[NoticeResult]])
+@router.get("", response_model=ApiResult[list[NoticeResult]])
 async def get_notice_list(
     useFlag: Optional[bool] = Query(True),
     schTxt: Optional[str] = Query(None),
@@ -48,7 +48,7 @@ async def get_notice_by_id(noticeId: int = Path(..., ge=1)) -> ApiResult[NoticeR
         api_result.message = str(e)
     return api_result
 
-@router.post("/", response_model=ApiResult[NoticeResult])
+@router.post("", response_model=ApiResult[NoticeResult])
 async def add_notice(noticeForm: NoticeSchema) -> ApiResult[NoticeModel]:
     try:
         api_result = ApiResult()
@@ -64,7 +64,7 @@ async def add_notice(noticeForm: NoticeSchema) -> ApiResult[NoticeModel]:
         api_result.message = str(e)
     return api_result
 
-@router.put("/", response_model=ApiResult)
+@router.put("", response_model=ApiResult)
 async def update_notice(noticeForm: NoticeSchema) -> ApiResult:
     try:
         api_result = ApiResult()

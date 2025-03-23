@@ -17,7 +17,7 @@ router = APIRouter(
     prefix="/api/file"
 )
 
-@router.get("/", response_model=ApiResult[list[FileResult]])
+@router.get("", response_model=ApiResult[list[FileResult]])
 async def get_file_list(
     schTxt: Optional[str] = Query(None),
     linkInfo: Optional[str] = Query(None),
@@ -79,7 +79,7 @@ async def get_file_by_id(fileId: int = Path(..., ge=1)) -> ApiResult[FileModel]:
         api_result.message = str(e)
     return api_result
 
-@router.post("/", response_model=ApiResult[FileResult])
+@router.post("", response_model=ApiResult[FileResult])
 async def upload_file(fileForm: FileForm) -> ApiResult[FileModel]:
     try:
         api_result = ApiResult()

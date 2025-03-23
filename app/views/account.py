@@ -12,7 +12,7 @@ router = APIRouter(
     prefix="/api/account"
 )
 
-@router.get("/", response_model=ApiResult[list[AccountResult]])
+@router.get("", response_model=ApiResult[list[AccountResult]])
 async def get_account_list(
     useFlag: Optional[bool] = Query(True),
     schTxt: Optional[str] = Query(None),
@@ -47,7 +47,7 @@ async def get_account_by_id(accountId: int = Path(..., ge=1)) -> ApiResult[Accou
         api_result.message = str(e)
     return api_result
 
-@router.post("/", response_model=ApiResult[AccountResult])
+@router.post("", response_model=ApiResult[AccountResult])
 async def add_account(accountForm: AccountForm) -> ApiResult[AccountModel]:
     try:
         api_result = ApiResult()
@@ -63,7 +63,7 @@ async def add_account(accountForm: AccountForm) -> ApiResult[AccountModel]:
         api_result.message = str(e)
     return api_result
 
-@router.put("/", response_model=ApiResult)
+@router.put("", response_model=ApiResult)
 async def update_account(accountForm: AccountForm) -> ApiResult:
     try:
         api_result = ApiResult()
