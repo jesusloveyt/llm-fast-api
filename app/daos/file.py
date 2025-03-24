@@ -7,7 +7,7 @@ from models.file import FileModel
 
 def get_list(schTxt:str=None, linkInfo:str=None, listCount:int=None, skipCount:int=None)-> list[FileModel]:
     with session_maker() as session:
-        file_list_query = session.query(FileModel)
+        file_list_query = session.query(FileModel).filter(FileModel.deletedAt == None)
         if linkInfo:
             file_list_query = file_list_query.filter(FileModel.linkInfo == linkInfo)
         if schTxt:
@@ -34,8 +34,9 @@ def get_list_by_link(linkInfo:str, linkKey:int)-> list[FileModel]:
     with session_maker() as session:
         file_list_query = session.query(FileModel).filter(
             FileModel.linkInfo == linkInfo,
-            FileModel.linkKey == linkKey
-            )        
+            FileModel.linkKey == linkKey,
+            FileModel.deletedAt == None
+        )
         file_list = file_list_query.all()
         return file_list
 
