@@ -1,9 +1,9 @@
 import boto3
 
-from common.constants import AWS_S3_ACCESS_KEY, AWS_S3_PRIVATE_KEY, BUCKET_NAME
+from common.constants import AWS_S3_ACCESS_KEY, AWS_S3_PRIVATE_KEY, REGION_NAME, BUCKET_NAME
 
 s3_client = boto3.client(
-    "s3", aws_access_key_id=AWS_S3_ACCESS_KEY, aws_secret_access_key=AWS_S3_PRIVATE_KEY
+    "s3", region_name=REGION_NAME, aws_access_key_id=AWS_S3_ACCESS_KEY, aws_secret_access_key=AWS_S3_PRIVATE_KEY
 )
 
 def upload_file_on_s3(file_key: str, file_bytes):
