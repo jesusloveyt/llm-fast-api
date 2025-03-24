@@ -7,7 +7,6 @@ from models.notice import NoticeModel
 
 def get_list(useFlag:bool=True, schTxt:str=None, noticeKind:str=None, listCount:int=None, skipCount:int=None)-> list[NoticeModel]:
     with session_maker() as session:
-
         notice_list_query = session.query(NoticeModel).filter(NoticeModel.useFlag == useFlag)
         if noticeKind:
             notice_list_query = notice_list_query.filter(NoticeModel.noticeKind == noticeKind)

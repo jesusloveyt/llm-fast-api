@@ -7,7 +7,6 @@ from models.code import CodeModel
 
 def get_list(useFlag:bool=True, schTxt:str=None, parentCode:str=None, listCount:int=None, skipCount:int=None)-> list[CodeModel]:
     with session_maker() as session:
-
         code_list_query = session.query(CodeModel).filter(CodeModel.useFlag == useFlag)
         if parentCode:
             code_list_query = code_list_query.filter(CodeModel.parentCode == parentCode)

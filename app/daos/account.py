@@ -5,8 +5,6 @@ from common.db.query_worker import query_data
 from common.db.context import session_maker
 from models.account import AccountModel
 from models.file import FileModel
-# from dtos.account import AccountResult
-# from dtos.file import FileSchema
 
 def query_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, listCount:int=None, skipCount:int=None)-> list[AccountModel]:
     where_sql = "WHERE 1 = 1"
@@ -63,7 +61,6 @@ def query_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, listCount:
     
 def get_list(useFlag:bool=True, schTxt:str=None, joinType:str=None, listCount:int=None, skipCount:int=None)-> list[AccountModel]:
     with session_maker() as session:
-
         account_list_query = session.query(AccountModel).filter(AccountModel.useFlag == useFlag)
         if joinType:
             account_list_query = account_list_query.filter(AccountModel.joinType == joinType)
