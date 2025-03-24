@@ -9,7 +9,7 @@ from dtos.file import FileSchema
 
 class NoticeSchema(BaseModel):
     noticeId: Optional[int] = 0
-    noticeKind: str
+    noticeKind: Optional[str] = None
     writerId: Optional[int] = None
     writerName: Optional[str] = None
     title: Optional[str] = None

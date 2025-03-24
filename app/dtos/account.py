@@ -9,7 +9,7 @@ from dtos.file import FileSchema
 
 class AccountSchema(BaseModel):
     accountId: Optional[int] = 0
-    joinType: str
+    joinType: Optional[str] = None
     accountKey: Optional[str] = None
     snsKey: Optional[str] = None
     userName: Optional[str] = None
