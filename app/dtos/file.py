@@ -6,8 +6,8 @@ from pydantic import BaseModel
 
 class FileSchema(BaseModel):
     fileId: Optional[int] = 0
-    linkInfo: str
-    linkKey: int
+    linkInfo: Optional[str] = None
+    linkKey: Optional[int] = None
     realName: Optional[str] = None
     fileUrl: Optional[str] = None
     fileSize: Optional[int] = None

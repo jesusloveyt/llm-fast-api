@@ -7,7 +7,6 @@ from models.file import FileModel
 
 def get_list(schTxt:str=None, linkInfo:str=None, listCount:int=None, skipCount:int=None)-> list[FileModel]:
     with session_maker() as session:
-
         file_list_query = session.query(FileModel)
         if linkInfo:
             file_list_query = file_list_query.filter(FileModel.linkInfo == linkInfo)
@@ -45,8 +44,9 @@ def get_by_link(linkInfo:str, linkKey:int)-> FileModel:
     with session_maker() as session:
         file_list_query = session.query(FileModel).filter(
             FileModel.linkInfo == linkInfo,
-            FileModel.linkKey == linkKey
-            )        
+            FileModel.linkKey == linkKey,
+            FileModel.deletedAt == None
+        )
         file = file_list_query.first()
         return file
 

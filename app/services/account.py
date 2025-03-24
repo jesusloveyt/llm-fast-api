@@ -16,16 +16,32 @@ def get_account_by_id(accountId:int)-> AccountModel:
     return account_data
 
 def add_account(accountForm: AccountForm)-> AccountModel:
-    return account_dao.insert(accountForm.joinType, accountForm.accountKey,  accountForm.password, accountForm.snsKey, 
-                              accountForm.userName, accountForm.phone, accountForm.email, 
-                              accountForm.postcode,  accountForm.address, accountForm.addressDetail, 
-                              accountForm.role, accountForm.fcmToken, accountForm.refreshToken)
+    account = account_dao.insert(accountForm.joinType, accountForm.accountKey,  accountForm.password, accountForm.snsKey, 
+                                 accountForm.userName, accountForm.phone, accountForm.email, 
+                                 accountForm.postcode,  accountForm.address, accountForm.addressDetail, 
+                                 accountForm.role, accountForm.fcmToken, accountForm.refreshToken)
+    if not account:
+        return None
+    if accountForm.profileImage:
+        file_dao.insert("accountProfileImage", account.accountId, accountForm.profileImage.realName, accountForm.profileImage.fileUrl, accountForm.profileImage.fileSize)
+    return account
 
 def update_account(accountForm: AccountForm)-> bool:
-    return account_dao.update(accountForm.accountId, accountForm.joinType,
-                              accountForm.userName, accountForm.phone, accountForm.email, 
-                              accountForm.postcode,  accountForm.address, accountForm.addressDetail, 
-                              accountForm.role, accountForm.fcmToken, accountForm.refreshToken)
+    account_dao.update(accountForm.accountId, accountForm.joinType,
+                       accountForm.userName, accountForm.phone, accountForm.email, 
+                       accountForm.postcode,  accountForm.address, accountForm.addressDetail, 
+                       accountForm.role, accountForm.fcmToken, accountForm.refreshToken)
+    if accountForm.profileImage:
+        fileId = accountForm.profileImage.fileId
+        if not fileId or fileId == 0:
+            file_dao.delete_using_flag(linkInfo="accountProfileImage", linkKey=accountForm.accountId)
+        
+        if accountForm.profileImage.realName and accountForm.profileImage.fileUrl:
+            file_dao.insert("accountProfileImage", accountForm.accountId, accountForm.profileImage.realName, accountForm.profileImage.fileUrl, accountForm.profileImage.fileSize)
+    else:
+        file_dao.delete_using_flag(linkInfo="accountProfileImage", linkKey=accountForm.accountId)
+
+    return True
 
 def delete_account(accountId: int)-> bool:
     return account_dao.delete_using_flag(accountId)

@@ -34,12 +34,14 @@ def update_notice(noticeForm: NoticeForm)-> bool:
     if noticeForm.mainImage:
         fileId = noticeForm.mainImage.fileId
         if not fileId or fileId == 0:
-            file_dao.delete_using_flag(linkInfo="noticeMainImage", linkId=noticeForm.noticeId)
+            file_dao.delete_using_flag(linkInfo="noticeMainImage", linkKey=noticeForm.noticeId)
         
         if noticeForm.mainImage.realName and noticeForm.mainImage.fileUrl:
             file_dao.insert("noticeMainImage", noticeForm.noticeId, noticeForm.mainImage.realName, noticeForm.mainImage.fileUrl, noticeForm.mainImage.fileSize)
+    else:
+        file_dao.delete_using_flag(linkInfo="noticeMainImage", linkKey=noticeForm.noticeId)
 
     return True
-    
+
 def delete_notice(noticeId: int)-> bool:
     return notice_dao.delete_using_flag(noticeId)
